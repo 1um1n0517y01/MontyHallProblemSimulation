@@ -1,0 +1,49 @@
+let howManyTimesDoYouWantToRun = 1000000;
+let carsWonCounter = 0;
+
+for (let i = 0; i < howManyTimesDoYouWantToRun; i++) {
+  //DOOR NO 1, DOOR NO 2, DOOR NO 3 VALUES SET TO GOAT AT START
+  let doorsArray = ['goat', 'goat', 'goat'];
+
+  //CAR DOOR CHOSEN RANDOMLY - NUMBERS FROM 0 TO 2
+  let carDoor = Math.floor(Math.random() * (3 - 1 + 1));
+
+  //USERS CHOICE CHOSEN RANDOMLY - NUMBERS FROM 0 TO 2
+  let usersChoice = Math.floor(Math.random() * (3 - 1 + 1));
+
+  //CAR DOOR VALUE SET TO 'car'
+  doorsArray[carDoor] = 'car';
+
+  //ADD '+usersChoice' TO doorsArray DOOR WHICH USER CHOSE
+  doorsArray[usersChoice] += '+usersChoice';
+
+  // console.log(doorsArray);
+
+  //DELETE 'goat' DOOR WHICH USER DID NOT CHOOSE
+  for (let i = 0; i < doorsArray.length; i++) {
+    if (doorsArray[i] === 'goat') {
+      doorsArray.splice(i, 1);
+      break;
+    }
+  }
+
+  //CHANGE USERS CHOICE TO OTHER DOOR
+  if (doorsArray[0].includes('+usersChoice')) {
+    doorsArray[0] = doorsArray[0].replace('+usersChoice', '');
+    doorsArray[1] += '+usersChoice';
+  } else {
+    doorsArray[1] = doorsArray[1].replace('+usersChoice', '');
+    doorsArray[0] += '+usersChoice';
+  }
+
+  for (let i = 0; i < doorsArray.length; i++) {
+    if (doorsArray[i] === 'car+usersChoice') {
+      carsWonCounter += 1;
+    }
+  }
+}
+
+//CALCUALTE WIN PERCENTAGE
+console.log(
+  'Win percentage: ' + (carsWonCounter / howManyTimesDoYouWantToRun) * 100 + '%'
+);
